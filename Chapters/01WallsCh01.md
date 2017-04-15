@@ -2,7 +2,8 @@
 
 >本章内容
 
->- Spring Boot简化Spring应用程序开发
+-   Spring Boot简化Spring应用程序开发
+
 - Spring Boot的基本特性
 - Spring Boot工作区的设置
 
@@ -47,7 +48,7 @@ Spring Boot让这一切成为了过去。
 暂且假设控制器就是你所需要的一切，那么你会发现，代码清单1-1所示的基于Groovy的控制器类（虽然很简单）就是一个完整的Spring应用程序。
 
 **代码清单1-1 一个完整的基于Groovy的Spring应用程序**
-```
+```groovy
 groovy
 @RestController
 class HelloController {
@@ -60,7 +61,7 @@ class HelloController {
 这里没有配置，没有web.xml，没有构建说明，甚至没有应用服务器，但这就是整个应用程序了。Spring Boot会搞定执行应用程序所需的各种后勤工作，你只要搞定应用程序的代码就好。
 
 假设你已经装好了Spring Boot的命令行界面（Command Line Interface，CLI），可以像下面这样在命令行里运行`HelloController`：
-```
+```shell
 $ spring run HelloController.groovy
 ```
 想必你已经注意到了，这里甚至没有编译代码，Spring Boot CLI可以运行未经编译的代码。
@@ -126,7 +127,7 @@ Spring Boot通过起步依赖为项目的依赖管理提供帮助。起步依赖
 - org.apache.tomcat.embed:tomcat-embed-el
 - org.apache.tomcat.embed:tomcat-embed-logging-juli
 
-不过，如果打算利用Spring Boot的起步依赖，你只需添加Spring Boot的Web起步依赖（`org.springframework.boot:spring-boot-starter-web`）***{![Spring Boot的起步依赖基本都以`spring-boot-starter`打头，随后是直接代表其功能的名字，比如`web`、`test`，下文出现起步依赖的名字时，可能就直接用其前缀后的单词来表示了。——译者注]}***，仅此一个。它会根据依赖传递把其他所需依赖引入项目里，你都不用考虑它们。
+不过，如果打算利用Spring Boot的起步依赖，你只需添加Spring Boot的Web起步依赖（`org.springframework.boot:spring-boot-starter-web`）***[Spring Boot的起步依赖基本都以`spring-boot-starter`打头，随后是直接代表其功能的名字，比如`web`、`test`，下文出现起步依赖的名字时，可能就直接用其前缀后的单词来表示了。——译者注]***，仅此一个。它会根据依赖传递把其他所需依赖引入项目里，你都不用考虑它们。
 
 比起减少依赖数量，起步依赖还引入了一些微妙的变化。向项目中添加了“web”起步依赖，实际上指定了应用程序所需的一类功能。因为应用是个Web应用程序，所以加入了“web”起步依赖。与之类似，如果应用程序要用到JPA持久化，那么就可以加入“jpa”起步依赖。如果需要安全功能，那就加入“security”起步依赖。简而言之，你不再需要考虑支持某种功能要用什么库了，引入相关起步依赖就行。
 
@@ -206,7 +207,7 @@ Spring Boot CLI有好几种安装方式：
 > 如果是在安装了Unix的机器上使用Spring Boot CLI，最好建立一个指向解压目录的符号链接，然后把这个符号链接添加到系统路径，而不是实际的目录。这样后续升级Spring Boot新版本，或是转换版本，都会很方便，只要重建一下符号链接，指向新版本就好了。
 
 你可以先浅尝辄止，看看你所安装的CLI版本号：
-```
+```shell
 $ spring --version
 ```
 如果一切正常，你会看到安装好的Spring Boot CLI的版本号。
@@ -216,36 +217,36 @@ $ spring --version
 ####2.使用Software Development Kit Manager进行安装
 
 软件开发工具管理包（Software Development Kit Manager，SDKMAN，曾用简称GVM）也能用来安装和管理多版本Spring Boot CLI。使用前，你需要先从[http://sdkman.io](http://sdkman.io)获取并安装SDKMAN。最简单的安装方式是使用命令行：
-```
+```shell
 $ curl -s get.sdkman.io | bash
 ```
 跟随输出的指示就能完成SDKMAN的安装。在我的机器上，我在命令行里执行了如下命令：
-```
+```bash
 $ source "/Users/habuma/.sdkman/bin/sdkman-init.sh"
 ```
 请注意，用户不同，这条命令也会有所不同。因为我的用户目录是/Users/habuma，所以这也是shell脚本的根路径。你需要根据你的实际情况稍作调整。
 
 一旦安装好了SDKMAN，就可以用下面的方式来安装Spring Boot CLI了：
-```
+```shell
 $ sdk install springboot
 $ spring --version
 ```
 假设一切正常，你将看到Spring Boot的当前版本号。
 
 如果想升级新版本的Spring Boot CLI，只需安装并使用即可。使用SDKMAN的`list`命令可以找到可用的版本：
-```
+```shell
 $ sdk list springboot
 ```
 `list`命令列出了所有可用版本，包括已经安装的和正在使用的。从中选择一个进行安装，然后就可以正常使用。举例来说，要安装Spring Boot CLI 1.3.0.RELEASE，直接使用`install`命令，指定版本号：
-```
+```shell
 $ sdk install springboot 1.3.0.RELEASE
 ```
 这样就会安装一个新版本，随后你会被询问是否将其设置为默认版本。要是你不想把它作为默认版本，或者想要切换到另一个版本，可以用`use`命令：
-```
+```shell
 $ sdk use springboot 1.3.0.RELEASE
 ```
 如果你希望把那个版本作为所有shell的默认版本，可以使用`default`命令：
-```
+```shell
 $ sdk default springboot 1.3.0.RELEASE
 ```
 使用SDKMAN来管理Spring Boot CLI有一个好处，你可以便捷地在Spring Boot的不同版本之间切换。这样你可以在正式发布前试用快照版本（snapshot）、里程碑版本（milestone）和尚未正式发布的候选版本（release candidate），试用后再切回稳定版本进行其他工作。
@@ -253,22 +254,22 @@ $ sdk default springboot 1.3.0.RELEASE
 ####3.使用Homebrew进行安装
 
 如果要在OS X的机器上进行开发，你还可以用Homebrew来安装Spring Boot CLI。Homebrew是OS X的包管理器，用于安装多种不同应用程序和工具。要安装Homebrew，最简单的方法就是运行安装用的Ruby脚本：
-```
+```shell
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/ master/install)"
 ```
 你可以在[http://brew.sh](http://brew.sh)看到更多关于Homebrew的内容（还有安装方法）。
 
 要用Homebrew来安装Spring Boot CLI，你需要引入Pivotal的tap***{![tap是向Homebrew添加额外仓库的一种途径。Pivotal是Spring及Spring Boot背后的公司，通过它的tap可以安装Spring Boot。]}***：
 
-```
+```shell
 $ brew tap pivotal/tap
 ```
 在有了Pivotal的tap后，就可以像下面这样安装Spring Boot CLI了：
-```
+```shell
 $ brew install springboot
 ```
 Homebrew会把Spring Boot CLI安装到/usr/local/bin，之后可以直接使用。可以通过检查版本号来验证安装是否成功：
-```
+```shell
 $ spring --version
 ```
 这条命令应该会返回刚才安装的Spring Boot版本号。你也可以运行代码清单1-1看看。
@@ -278,11 +279,11 @@ $ spring --version
 OS X用户还有另一种安装Spring Boot CLI的方法，即使用MacPorts，这是Mac OS X上另一个流行的安装工具。要使用MacPorts来安装Spring Boot CLI，必须先安装MacPorts，而MacPorts还要求安装Xcode。此外，使用不同版本的OS X时，MacPorts的安装步骤也会有所不同。因此我建议你根据[https://www.macports.org/install.php](https://www.macports.org/install.php)的安装指南来安装MacPorts。
 
 一旦安装好了MacPorts，就可以用以下命令来安装Spring Boot CLI了：
-```
+```shell
 $ sudo port install spring-boot-cli
 ```
 MacPorts会把Spring Boot CLI安装到/opt/local/share/java/spring-boot-cli，并在/opt/local/bin里放一个指向其可执行文件的符号链接。在安装MacPorts后，/opt/local/bin这个目录应该就在系统路径里了。你可以检查版本号来验证安装是否成功：
-```
+```shell
 $ spring --version
 ```
 这条命令应该会返回刚才安装的Spring Boot的版本号。你也可以运行代码清单1-1看看。
@@ -294,7 +295,7 @@ Spring Boot CLI为基于CLI的应用程序的运行、打包和测试提供了�
 如果用Homebrew安装Spring Boot CLI，那么命令行补全已经安装完毕。但如果是手工安装或者用SDKMAN安装的，那就需要执行脚本或者手工安装。（如果是通过MacPorts安装的Spring Boot CLI，那么你不必考虑命令行补全。）
 
 你可以在Spring Boot CLI安装目录的shell-completion子目录里找到补全脚本。有两个不同的脚本，一个是针对BASH的，另一个是针对zsh的。要使用BASH的补全脚本，可以在命令行里键入以下命令（假设安装时用的是SDKMAN）：
-```
+```shell
 $ . ~/.sdkman/springboot/current/shell-completion/bash/spring
 ```
 这样，在当前的shell里就可以使用Spring Boot CLI的补全功能了，但每次开启一个新的shell都要重新执行一次上面的命令才行。你也可以把这个脚本复制到你的个人或系统脚本目录里，这个目录的位置在不同的Unix里也会有所不同，可以参考系统文档（或Google）了解细节。
@@ -302,7 +303,7 @@ $ . ~/.sdkman/springboot/current/shell-completion/bash/spring
 开启了命令行补全之后，在命令行里键入`spring`命令，然后按Tab键就能看到下一步该输什么的提示。选中一个命令后，键入`--`（两个连字符）后再按Tab，就会显示出该命令的选项列表。
 
 如果你在Windows上进行开发，或者没有用BASH或zsh，那就无缘使用这些命令行补全脚本了。尽管如此，如果你用的是Spring Boot CLI的shell，那一样也有命令补全：
-```
+```shell
 $ spring shell
 ```
 和BASH、zsh的命令补全脚本（在BASH/zsh shell里执行的）不同，Spring Boot CLI shell会新开一个特别针对Spring Boot的shell，在里面可以执行各种CLI命令，Tab键也能有命令补全。
@@ -370,7 +371,7 @@ __图1-2 Initializr创建的项目，提供了构建Spring Boot应用程序所�
 
 ####2.在Spring Tool Suite里创建Spring Boot项目
 
-长久以来，Spring Tool Suite***{![Spring Tool Suite是Eclipse IDE的一个发行版，增加了诸多能辅助Spring开发的特性。你可以从[http://spring.io/tools/sts](http://spring.io/tools/sts)下载Spring Tool Suite。]}***一直都是开发Spring应用程序的不二之选。从3.4.0版本开始，它就集成了Spring Initializr，这让它成为开始上手Spring Boot的好方法。
+长久以来，Spring Tool Suite***[Spring Tool Suite是Eclipse IDE的一个发行版，增加了诸多能辅助Spring开发的特性。你可以从[http://spring.io/tools/sts](http://spring.io/tools/sts)下载Spring Tool Suite。]***一直都是开发Spring应用程序的不二之选。从3.4.0版本开始，它就集成了Spring Initializr，这让它成为开始上手Spring Boot的好方法。
 
 要在Spring Tool Suite里创建新的Spring Boot应用程序，在File菜单里选中New > Spring Starter Project菜单项，随后Spring Tool Suite会显示一个与图1-3相仿的对话框。
 
@@ -431,41 +432,41 @@ __图1-8 IntelliJ IDEA的Spring Boot初始化向导的最后一屏__
 如前文所述，如果你想仅仅写代码就完成Spring应用程序的开发，那么Spring Boot CLI是个不错的选择。然而，Spring Boot CLI的功能还不限于此，它有一些命令可以帮你使用Initializr，通过它上手开发更传统的Java项目。
 
 Spring Boot CLI包含了一个`init`命令，可以作为Initializr的客户端界面。`init`命令最简单的用法就是创建Spring Boot项目的基线：
-```
+```shell
 $ spring init
 ```
 在和Initializr的Web应用程序通信后，`init`命令会下载一个demo.zip文件。解压后你会看到一个典型的项目结构，包含一个Maven的pom.xml构建描述文件。Maven的构建说明只包含最基本的内容，即只有Spring Boot基线和测试起步依赖。你可能会想要更多的东西。
 
 假设你想要构建一个Web应用程序，其中使用JPA实现数据持久化，使用Spring Security进行安全加固，可以用`--dependencies`或`-d`来指定那些初始依赖：
-```
+```shell
 $ spring init -dweb,jpa,security
 ```
 这条命令会下载一个demo.zip文件，包含与之前一样的项目结构，但在pom.xml里增加了Spring Boot的web、jpa和security起步依赖。请注意，在`-d`和依赖之间不能加空格，否则就变成了下载一个ZIP文件，文件名是web,jpa,security。
 
 现在，假设你想用Gradle来构建项目。没问题，用`--build`参数将Gradle指定为构建类型：
-```
+```shell
 $ spring init -dweb,jpa,security --build gradle
 ```
 默认情况下，无论是Maven还是Gradle的构建说明都会产生一个可执行JAR文件。但如果你想要一个WAR文件，那么可以通过`--packaging`或者`-p`参数进行说明：
-```
+```shell
 $ spring init -dweb,jpa,security --build gradle -p war
 ```
 到目前为止，`init`命令只用来下载ZIP文件。如果你想让CLI帮你解压那个ZIP文件，可以指定一个用于解压的目录：
-```
+```shell
 $ spring init -dweb,jpa,security --build gradle -p war myapp
 ```
 此处的最后一个参数说明你希望把项目解压到myapp目录里去。
 
 此外，如果你希望CLI把生成的项目解压到当前目录，可以使用`--extract`或者`-x`参数：
-```
+```shell
 $ spring init -dweb,jpa,security --build gradle -p jar -x
 ```
 `init`命令还有不少其他参数，包括基于Groovy构建项目的参数、指定用Java版本编译的参数，还有选择构建依赖的Spring Boot版本的参数。可以通过`help`命令了解所有参数的情况：
-```
+```shell
 $ spring help init
 ```
 你也可以查看那些参数都有哪些可选项，为`init`命令带上`--list`或`-l`参数就可以了：
-```
+```shell
 $ spring init -l
 ```
 你一定注意到了，尽管`spring init -l`列出了一些Initializr支持的参数，但并非所有参数都能直接为Spring Boot CLI的`init`命令所支持。举例来说，用CLI初始化项目时，你不能指定根包的名字，它默认为demo。`spring help init`会告诉你CLI的`init`命令都支持哪些参数。
