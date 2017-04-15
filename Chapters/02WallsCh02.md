@@ -2,7 +2,7 @@
 
 > 本章内容
 
->- 使用Spring Boot起步依赖
+- 使用Spring Boot起步依赖
 - 自动进行Spring配置
 
 你上次在超市或大型零售商店自己推开门是什么时候？大多数大型商店都安装了带感应功能的自动门，虽然所有门都能让你进入建筑物内，但自动门不用你动手推拉。
@@ -66,7 +66,7 @@ __图2-2 初始化后的readinglist项目结构__
 
 因为构建说明文件里有很多Spring Boot的优点尚未揭秘，所以我打算把最好的留到最后，先让我们来看看`ReadingListApplication.java`。
 
-####1.启动引导Spring
+#### 1.启动引导Spring
 
 `ReadingListApplication`在Spring Boot应用程序里有两个作用：配置和启动引导。首先，这是主要的Spring配置类。虽然Spring Boot的自动配置免除了很多Spring配置，但你还需要进行少量配置来启用自动配置。正如代码清单2-1所示，这里只有一行配置代码。
 
@@ -104,7 +104,7 @@ $ java -jar build/libs/readinglist-0.0.1-SNAPSHOT.jar
 
 你几乎不需要修改`ReadingListApplication.java`。如果你的应用程序需要Spring Boot自动配置以外的其他Spring配置，一般来说，最好把它写到一个单独的`@Configuration`标注的类里。（组件扫描会发现并使用这些类的。）极度简单的情况下，可以把自定义配置加入`ReadingListApplication.java`。
 
-####2.测试Spring Boot应用程序
+#### 2.测试Spring Boot应用程序
 
 Initializr还提供了一个测试类的骨架，可以基于它为你的应用程序编写测试。但`ReadingListApplicationTests`（代码清单2-2）不止是个用于测试的占位符，它还是一个例子，告诉你如何为Spring Boot应用程序编写测试。
 
@@ -124,7 +124,7 @@ Initializr还提供了一个测试类的骨架，可以基于它为你的应用�
 
 当然，现在这只是一个新的应用程序，你还会添加自己的测试。但`contextLoads()`方法是个良好的开端，此刻可以验证应用程序提供的各种功能。第4章会更详细地讨论如何测试Spring Boot应用程序。
 
-####3.配置应用程序属性
+#### 3.配置应用程序属性
 
 Initializr为你生成的application.properties文件是一个空文件。实际上，这个文件完全是可选的，你大可以删掉它，这不会对应用程序有任何影响，但留着也没什么问题。
 
@@ -182,7 +182,7 @@ __代码清单2-4 使用Spring Boot的Maven插件及父起步依赖__
 
 说起依赖，无论哪个构建说明文件，都只有五个依赖，除了你手工添加的H2之外，其他的Artifact ID都有spring-boot-starter-前缀。这些都是Spring Boot起步依赖，它们都有助于Spring Boot应用程序的构建。让我们来看看它们究竟都有哪些好处。
 
-##2.2 使用起步依赖
+## 2.2 使用起步依赖
 
 要理解Spring Boot起步依赖带来的好处，先让我们假设它们尚不存在。如果没用Spring Boot的话，你会向项目里添加哪些依赖呢？要用Spring MVC的话，你需要哪个Spring依赖？你还记得Thymeleaf的Group和Artifact ID吗？你应该用哪个版本的Spring Data JPA呢？它们放在一起兼容吗？
 
@@ -318,7 +318,7 @@ compile("com.fasterxml.jackson.core:jackson-databind:2.3.1")
 
 既然知道Spring Boot会替我们料理这些事情，那么与其浪费时间讨论这些Spring配置，还不如看看如何利用Spring Boot的自动配置，让我们专注于应用程序代码。除了开始写代码，我想不到更好的办法了。
 
-####1.定义领域模型
+#### 1.定义领域模型
 
 我们应用程序里的核心领域概念是读者阅读列表上的书。因此我们需要定义一个实体类来表示这个概念。代码清单2-5演示了如何定义一本书。
 
@@ -394,7 +394,7 @@ public class Book {
 ```
 如你所见，`Book`类就是简单的Java对象，其中有些描述书的属性，还有必要的访问方法。`@Entity`注解表明它是一个JPA实体，`id`属性加了`@Id`和`@GeneratedValue`注解，说明这个字段是实体的唯一标识，并且这个字段的值是自动生成的。
 
-####2.定义仓库接口
+#### 2.定义仓库接口
 
 接下来，我们就要定义用于把`Book`对象持久化到数据库的仓库了。***{![原文这里写的是`ReadingList`对象，但文中并没有定义这个对象，看代码应该是`Book`对象。——译者注]}***因为用了Spring Data JPA，所以我们要做的就是简单地定义一个接口，扩展一下Spring Data JPA的`JpaRepository`接口：
 ```
@@ -412,7 +412,7 @@ public interface ReadingListRepository extends JpaRepository<Book, Long> {
 
 如果你好奇谁来实现这个`ReadingListRepository`及其继承的18个方法，请不用担心，Spring Data提供了很神奇的魔法，只需定义仓库接口，在应用程序启动后，该接口在运行时会自动实现。
 
-####3.创建Web界面
+#### 3.创建Web界面
 
 现在，我们定义好了应用程序的领域模型，还有把领域对象持久化到数据库里的仓库接口，剩下的就是创建Web前端了。代码清单2-6的Spring MVC控制器就能为应用程序处理HTTP请求。
 
@@ -546,7 +546,7 @@ label {
 
 虽然没什么Spring配置，但是这已经是一个可以运行的完整Spring应用程序了。让我们把它跑起来，看看是怎么样的。
 
-###2.3.2 运行应用程序
+### 2.3.2 运行应用程序
 
 运行Spring Boot应用程序有几种方法。先前在2.5节里，我们讨论了如何通过Maven和Gradle来运行应用程序，以及如何构建并运行可执行JAR。稍后，在第8章里你将看到如何构建WAR文件，并用传统的方式部署到Java Web应用服务器里，比如Tomcat。
 
@@ -570,7 +570,7 @@ __图2-5 添加了一些图书后的阅读列表__
 
 再多用用这个应用程序吧。你准备好之后，我们就来看一下Spring Boot是如何做到不写Spring配置代码就能开发整个Spring应用程序的。
 
-###2.3.3 刚刚发生了什么
+### 2.3.3 刚刚发生了什么
 
 如我所说，在没有配置代码的情况下，很难描述自动配置。与其花时间讨论那些你不用做的事情，不如在这一节里关注一下你要做的事——写代码。
 
